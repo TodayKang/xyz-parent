@@ -35,12 +35,12 @@ eureka-service-url-3: http://127.0.0.1:1001${server.servlet.context-path}/eureka
 ---
 ## Eureka Server 1
 spring:
-  profiles: node1
+  profiles: server1
 server:
   port: 1001
 eureka:
   instance:
-    hostname: node1
+    hostname: server1
   client:
     service-url:
       defaultZone: ${eureka-service-url-1}
@@ -48,12 +48,12 @@ eureka:
 ---
 ## Eureka Server 2
 spring:
-  profiles: node2
+  profiles: server2
 server:
   port: 1002
 eureka:
   instance:
-    hostname: node2
+    hostname: server2
   client:
     service-url:
       defaultZone: ${eureka-service-url-2}
@@ -61,12 +61,12 @@ eureka:
 ---
 ## Eureka Server 3
 spring:
-  profiles: node3
+  profiles: server3
 server:
   port: 1003
 eureka:
   instance:
-    hostname: node3
+    hostname: server3
   client:
     service-url:
       defaultZone: ${eureka-service-url-3}
