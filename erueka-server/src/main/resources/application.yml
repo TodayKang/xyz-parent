@@ -1,4 +1,4 @@
-#****************Eureka单机配置****************
+#****************Eureka集群配置****************
 server:
   port: 1000
   servlet.context-path: /@project.artifactId@
@@ -11,24 +11,62 @@ spring:
     include: public
 
 #****************Eureka配置****************
+spring.cloud.config.discovery.enabled: true
 eureka:
-  client:
-    #是否从Eureka Server获取注册信息，默认true。当前是单一节点的Eureka Server，不需要同步其他Eureka Server节点的数据，设为false。
-    fetch-registry: false
-    #是否将自己注册到Eureka Server，默认true。当前应用是Eureka Server，设为false。
-    register-with-eureka: false
-    #与Eureka Server交互的地址，查询服务和注册服务都依赖这个地址，默认:http://localhost:8761/eureka/，多个地址用 , 分隔。
-    service-url:
-      defaultZone: http://127.0.0.1:${server.port}${server.servlet.context-path}/eureka/
   instance:
     #是否将自己的 IP 注册到 Eureka Server(默认 false,表示注册微服务所在操作系统的 hostname 到Eureka Server)
     prefer-ip-address: true
     #Eureka可以自定义key-value的元数据
     metadata-map:
-      service-function: 这是一个Eureka单机注册中心
-  #Eureka服务端配置
+      service-function: 这是一个Eureka注册中心集群
+  #Eureka服务端配置(线上环境无需配置,默认即可)
   server:
-    #自我保护机制，默认true(关闭自我保护，保证会注销微服务)
+    #关闭保护机制，默认true
     enable-self-preservation: false
-    # 剔除失效服务间隔，默认60000毫秒
+    #剔除失效服务间隔，默认60000
     eviction-interval-timer-in-ms: 3000
+
+#****************Eureka互相注册地址配置****************
+eureka-service-url-1: http://127.0.0.1:1002${server.servlet.context-path}/eureka/,http://127.0.0.1:1003${server.servlet.context-path}/eureka/
+eureka-service-url-2: http://127.0.0.1:1001${server.servlet.context-path}/eureka/,http://127.0.0.1:1003${server.servlet.context-path}/eureka/
+eureka-service-url-3: http://127.0.0.1:1001${server.servlet.context-path}/eureka/,http://127.0.0.1:1002${server.servlet.context-path}/eureka/
+
+#****************Eureka集群配置****************
+---
+## Eureka Server 1
+spring:
+  profiles: node1
+server:
+  port: 1001
+eureka:
+  instance:
+    hostname: node1
+  client:
+    service-url:
+      defaultZone: ${eureka-service-url-1}
+
+---
+## Eureka Server 2
+spring:
+  profiles: node2
+server:
+  port: 1002
+eureka:
+  instance:
+    hostname: node2
+  client:
+    service-url:
+      defaultZone: ${eureka-service-url-2}
+
+---
+## Eureka Server 3
+spring:
+  profiles: node3
+server:
+  port: 1003
+eureka:
+  instance:
+    hostname: node3
+  client:
+    service-url:
+      defaultZone: ${eureka-service-url-3}

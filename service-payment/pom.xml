@@ -15,7 +15,7 @@
 
     <packaging>jar</packaging>
 
-    <name>${project.groupId}</name>
+    <name>${project.artifactId}</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

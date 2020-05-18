@@ -9,13 +9,13 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.xyz.sync.service</groupId>
+	<groupId>com.xyz.cloud.base</groupId>
 	<artifactId>erueka-server</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 
-	<name>erueka-server</name>
+	<name>${project.artifactId}</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
