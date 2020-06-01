@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.xyz.cloud.base</groupId>
-    <artifactId>erueka-server</artifactId>
+    <artifactId>eureka-server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
